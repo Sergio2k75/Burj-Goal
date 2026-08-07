@@ -1,0 +1,102 @@
+.floor {
+  position: relative;
+  margin-inline: auto;
+  min-height: 1.65rem;
+  background: linear-gradient(
+    180deg,
+    var(--tower-mid) 0%,
+    var(--tower-dark) 100%
+  );
+  border-left: 1px solid var(--tower-edge);
+  border-right: 1px solid var(--tower-edge);
+  box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.35);
+  animation: floorGrow 0.45s ease-out both;
+  transition: width 0.35s ease;
+}
+
+.ledge {
+  position: absolute;
+  top: 0;
+  left: -2%;
+  right: -2%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--tower-ledge),
+    transparent
+  );
+  opacity: 0.7;
+}
+
+.windows {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 100%;
+  padding: 0.35rem 8%;
+  gap: 0.25rem;
+}
+
+.window {
+  flex: 1;
+  max-width: 0.7rem;
+  height: 55%;
+  min-height: 0.55rem;
+  border-radius: 1px;
+  transition: background 0.4s ease, box-shadow 0.4s ease;
+}
+
+.dim {
+  background: var(--window-dim);
+  box-shadow: none;
+}
+
+.lit {
+  background: var(--window-lit);
+  box-shadow:
+    0 0 6px var(--window-glow),
+    0 0 14px rgba(255, 196, 90, 0.35);
+  animation: lightFade 0.5s ease-out both;
+}
+
+.done {
+  background: linear-gradient(
+    180deg,
+    var(--tower-lit-mid) 0%,
+    var(--tower-dark) 100%
+  );
+}
+
+.open {
+  /* default mass */
+}
+
+@keyframes floorGrow {
+  from {
+    opacity: 0;
+    transform: scaleY(0.4) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scaleY(1) translateY(0);
+  }
+}
+
+@keyframes lightFade {
+  from {
+    opacity: 0.3;
+    filter: brightness(0.6);
+  }
+  to {
+    opacity: 1;
+    filter: brightness(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .floor,
+  .lit {
+    animation: none;
+  }
+}

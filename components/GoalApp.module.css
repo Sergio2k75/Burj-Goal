@@ -1,0 +1,168 @@
+.shell {
+  position: relative;
+  isolation: isolate;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow: hidden;
+  color: var(--text);
+}
+
+.atmosphere {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 50% at 70% 15%, rgba(40, 90, 120, 0.35), transparent 55%),
+    radial-gradient(ellipse 60% 40% at 20% 30%, rgba(20, 50, 80, 0.4), transparent 50%),
+    linear-gradient(180deg, #06101c 0%, #0a1a2a 42%, #102838 72%, #0c1824 100%);
+}
+
+.stars {
+  position: absolute;
+  inset: 0;
+  opacity: 0.55;
+  background-image:
+    radial-gradient(1px 1px at 12% 18%, rgba(255, 255, 255, 0.7), transparent),
+    radial-gradient(1px 1px at 28% 8%, rgba(255, 255, 255, 0.5), transparent),
+    radial-gradient(1.5px 1.5px at 48% 22%, rgba(255, 240, 200, 0.65), transparent),
+    radial-gradient(1px 1px at 66% 12%, rgba(255, 255, 255, 0.45), transparent),
+    radial-gradient(1px 1px at 82% 28%, rgba(255, 255, 255, 0.55), transparent),
+    radial-gradient(1.5px 1.5px at 91% 9%, rgba(255, 230, 180, 0.5), transparent),
+    radial-gradient(1px 1px at 35% 35%, rgba(255, 255, 255, 0.35), transparent),
+    radial-gradient(1px 1px at 58% 40%, rgba(255, 255, 255, 0.4), transparent);
+  animation: skyDrift 48s linear infinite;
+}
+
+.haze {
+  position: absolute;
+  inset: 35% 0 0;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(30, 70, 95, 0.2) 40%,
+    rgba(15, 40, 55, 0.45) 100%
+  );
+  animation: hazePulse 16s ease-in-out infinite alternate;
+}
+
+.ground {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 18%;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(2, 8, 14, 0.75) 45%,
+    #02060c 100%
+  );
+}
+
+.main {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  min-height: 100vh;
+  min-height: 100dvh;
+  width: min(1120px, 100%);
+  margin: 0 auto;
+  padding: 1.75rem 1.25rem 2.5rem;
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 34rem;
+}
+
+.kicker {
+  margin: 0 0 0.65rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.brand {
+  margin: 0;
+  font-family: var(--font-display), serif;
+  font-size: clamp(3.2rem, 10vw, 5.5rem);
+  font-weight: 500;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  text-shadow: 0 0 40px rgba(255, 196, 90, 0.12);
+}
+
+.tagline {
+  margin: 1rem 0 1.75rem;
+  font-size: clamp(1.05rem, 2.4vw, 1.25rem);
+  color: var(--text-muted);
+  line-height: 1.45;
+  max-width: 22rem;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.listWrap {
+  border-top: 1px solid rgba(140, 180, 210, 0.15);
+  padding-top: 0.85rem;
+}
+
+.towerPane {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+@keyframes skyDrift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-2.5%, 1.5%, 0);
+  }
+}
+
+@keyframes hazePulse {
+  from {
+    opacity: 0.75;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (min-width: 900px) {
+  .main {
+    grid-template-columns: minmax(280px, 1fr) minmax(320px, 1.05fr);
+    align-items: stretch;
+    gap: 2rem;
+    padding: 2.5rem 2rem 2rem;
+  }
+
+  .towerPane {
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .copy {
+    padding-bottom: 2rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stars,
+  .haze {
+    animation: none;
+  }
+}
