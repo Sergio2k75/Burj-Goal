@@ -9,6 +9,9 @@ type FloorProps = {
   total: number;
 };
 
+/**
+ * One floor in the tower. Its width and window count scale with its position so the skyline feels layered.
+ */
 export function Floor({ task, index, total }: FloorProps) {
   const taper = 1 - (index / Math.max(total, 1)) * 0.45;
   const windowCount = Math.max(3, Math.min(7, Math.round(4 + taper * 3)));

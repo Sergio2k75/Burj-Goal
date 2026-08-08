@@ -8,6 +8,10 @@ type TaskFormProps = {
   inputId?: string;
 };
 
+/**
+ * Controlled form for creating a new goal.
+ * It trims whitespace, prevents empty submissions, and clears the input after a successful add.
+ */
 export function TaskForm({ onAdd, inputId = "goal-input" }: TaskFormProps) {
   const [title, setTitle] = useState("");
 

@@ -9,6 +9,10 @@ type TaskListProps = {
   onDelete: (id: string) => void;
 };
 
+/**
+ * Renders the current goals in a stable order, with toggle and delete controls for each item.
+ * Completed goals are visually marked and the list is sorted from highest-order floor to lowest.
+ */
 export function TaskList({ tasks, onToggle, onDelete }: TaskListProps) {
   if (tasks.length === 0) {
     return (

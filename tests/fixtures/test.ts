@@ -8,13 +8,13 @@ type GoalFixtures = {
 };
 
 export const test = base.extend<GoalFixtures>({
-  goalPage: async ({ page }, use) => {
+  goalPage: async ({ page }, provideFixture) => {
     const goalPage = new GoalPage(page);
-    await use(goalPage);
+    await provideFixture(goalPage);
   },
 
-  openApp: async ({ goalPage }, use) => {
-    await use(async (tasks) => {
+  openApp: async ({ goalPage }, provideFixture) => {
+    await provideFixture(async (tasks) => {
       if (tasks && tasks.length > 0) {
         await goalPage.gotoWithTasks(tasks);
       } else {

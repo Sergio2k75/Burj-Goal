@@ -65,6 +65,10 @@ function createId(): string {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
 }
 
+/**
+ * Shared task-state hook for the app.
+ * It keeps the current list in sync with localStorage and broadcasts changes to the UI.
+ */
 export function useTasks() {
   const tasks = useSyncExternalStore(subscribe, readTasks, getServerSnapshot);
 

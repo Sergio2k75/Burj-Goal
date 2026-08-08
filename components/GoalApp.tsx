@@ -7,6 +7,10 @@ import { useTasks } from "@/lib/useTasks";
 import { INTERNAL_VERSION } from "@/lib/version";
 import styles from "./GoalApp.module.css";
 
+/**
+ * Top-level client view that composes the goal form, task list, and visual tower.
+ * It reads task state from the shared hook and passes the mutation handlers to each child.
+ */
 export function GoalApp() {
   const { tasks, addTask, toggleTask, deleteTask } = useTasks();
 

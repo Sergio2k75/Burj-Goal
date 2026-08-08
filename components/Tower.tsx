@@ -8,6 +8,10 @@ type TowerProps = {
   tasks: Task[];
 };
 
+/**
+ * Visual tower that maps the current task list to a stack of floors.
+ * The caption summarises how many floors are lit so far.
+ */
 export function Tower({ tasks }: TowerProps) {
   const floors = [...tasks].sort((a, b) => b.order - a.order);
   const total = tasks.length;
