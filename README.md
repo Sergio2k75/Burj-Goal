@@ -1,5 +1,7 @@
 # Burj-Goal
 
+![Burj-Goal — personal goal tower](docs/burj-goal.png)
+
 Personal goal tower in your browser. Each goal is a floor on a Burj-inspired skyscraper — complete a goal and its windows light up. Goals are saved in **localStorage** on your device (no account, no backend).
 
 ## Stack

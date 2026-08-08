@@ -9,7 +9,8 @@
     "lint": "eslint",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
-    "test:e2e:headed": "playwright test --headed"
+    "test:e2e:headed": "playwright test --headed",
+    "docs:screenshot": "playwright test -c playwright.screenshot.config.ts"
   },
   "dependencies": {
     "next": "16.3.0",

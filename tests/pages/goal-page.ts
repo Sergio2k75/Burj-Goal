@@ -42,16 +42,15 @@ export class GoalPage {
     await this.page.reload();
   }
 
-  /** Seed tasks into localStorage, then reload so useTasks reads them. */
+  /** Seed tasks into localStorage before app JS runs, then navigate. */
   async gotoWithTasks(tasks: SeedTask[]) {
-    await this.page.goto("/");
-    await this.page.evaluate(
+    await this.page.addInitScript(
       ({ key, value }) => {
         window.localStorage.setItem(key, value);
       },
       { key: STORAGE_KEY, value: JSON.stringify(tasks) },
     );
-    await this.page.reload();
+    await this.page.goto("/");
   }
 
   async addGoal(title: string) {
