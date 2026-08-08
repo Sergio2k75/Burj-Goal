@@ -124,6 +124,19 @@
   justify-content: center;
 }
 
+.version {
+  position: absolute;
+  z-index: 1;
+  right: 1rem;
+  bottom: 0.75rem;
+  margin: 0;
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  color: rgba(160, 190, 210, 0.35);
+  pointer-events: none;
+  user-select: none;
+}
+
 @keyframes skyDrift {
   from {
     transform: translate3d(0, 0, 0);
