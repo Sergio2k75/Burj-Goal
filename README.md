@@ -21,6 +21,10 @@ npm run build
 npm start
 ```
 
+## Testing
+
+Playwright E2E tests live under [`tests/`](tests/). See [`tests/README.md`](tests/README.md) for setup and commands (`npm run test:e2e`).
+
 ## Deploy to Vercel
 
 1. Push this repo to GitHub (or deploy from the Vercel CLI).
