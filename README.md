@@ -36,9 +36,7 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:3000.
-
-If you want to inspect the app manually or run Playwright in a mode that uses an already-running server, start the app first with `npm run dev`. The Playwright suite will reuse an existing app on port 3000 when one is already running; otherwise it will start its own build-and-serve process.
+Open http://localhost:3000. Use `npm run dev` for manual exploration only — Playwright e2e does not target that server.
 
 For a production-style smoke test:
 
@@ -56,6 +54,8 @@ Run the suite locally with:
 ```bash
 npm run test:e2e
 ```
+
+That command builds the app and starts a dedicated production server on port **3001** (`reuseExistingServer: false`), so a local `npm run dev` on :3000 cannot be reused by mistake.
 
 Additional helpers:
 
