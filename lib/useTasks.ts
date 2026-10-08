@@ -43,13 +43,20 @@ function readTasks(): Task[] {
   return memoryTasks;
 }
 
-/** Apply a mutation against the latest persisted tasks to avoid clobbering other tabs. */
-function mutateTasks(recipe: (prev: Task[]) => Task[]) {
+/**
+ * Apply a mutation against the latest persisted tasks to avoid clobbering other tabs.
+ * Only updates the in-memory cache after a successful write so a failed persist
+ * cannot poison later mutations that re-read from localStorage.
+ */
+function mutateTasks(recipe: (prev: Task[]) => Task[]): boolean {
   const prev = loadTasks();
   const next = recipe(prev);
+  if (!saveTasks(next)) {
+    return false;
+  }
   memoryTasks = next;
-  saveTasks(next);
   emit();
+  return true;
 }
 
 const EMPTY_TASKS: Task[] = [];
@@ -74,9 +81,9 @@ export function useTasks() {
 
   const addTask = useCallback((title: string) => {
     const trimmed = title.trim();
-    if (!trimmed) return;
+    if (!trimmed) return false;
 
-    mutateTasks((prev) => {
+    return mutateTasks((prev) => {
       const nextOrder =
         prev.length === 0 ? 0 : Math.max(...prev.map((t) => t.order)) + 1;
 
@@ -94,7 +101,7 @@ export function useTasks() {
   }, []);
 
   const toggleTask = useCallback((id: string) => {
-    mutateTasks((prev) =>
+    return mutateTasks((prev) =>
       prev.map((task) =>
         task.id === id
           ? { ...task, status: task.status === "done" ? "open" : "done" }
@@ -104,7 +111,7 @@ export function useTasks() {
   }, []);
 
   const deleteTask = useCallback((id: string) => {
-    mutateTasks((prev) =>
+    return mutateTasks((prev) =>
       prev
         .filter((task) => task.id !== id)
         .sort((a, b) => a.order - b.order)
