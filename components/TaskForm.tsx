@@ -4,7 +4,8 @@ import { useState, type FormEvent } from "react";
 import styles from "./TaskForm.module.css";
 
 type TaskFormProps = {
-  onAdd: (title: string) => void;
+  /** Return false when the goal was not persisted so the input can be kept. */
+  onAdd: (title: string) => boolean | void;
   inputId?: string;
 };
 
@@ -18,7 +19,8 @@ export function TaskForm({ onAdd, inputId = "goal-input" }: TaskFormProps) {
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!title.trim()) return;
-    onAdd(title);
+    const added = onAdd(title);
+    if (added === false) return;
     setTitle("");
   }
 

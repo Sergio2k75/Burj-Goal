@@ -18,13 +18,16 @@ export function loadTasks(): Task[] {
   }
 }
 
-export function saveTasks(tasks: Task[]): void {
-  if (typeof window === "undefined") return;
+/** Persist tasks. Returns false when the write fails (quota, private mode, etc.). */
+export function saveTasks(tasks: Task[]): boolean {
+  if (typeof window === "undefined") return false;
 
   try {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+    return true;
   } catch {
-    // Quota or private mode — fail silently for MVP
+    // Quota or private mode — caller must not treat memory as durable.
+    return false;
   }
 }
 
