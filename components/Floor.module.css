@@ -1,81 +1,209 @@
 .floor {
+  --steel-hi: #e8f2f8;
+  --steel: #b4c6d2;
+  --steel-dim: #667c8c;
   position: relative;
   margin-inline: auto;
-  min-height: 1.65rem;
-  background: linear-gradient(
-    180deg,
-    var(--tower-mid) 0%,
-    var(--tower-dark) 100%
-  );
-  border-left: 1px solid var(--tower-edge);
-  border-right: 1px solid var(--tower-edge);
-  box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.35);
-  animation: floorGrow 0.45s ease-out both;
-  transition: width 0.35s ease;
+  animation: floorGrow 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  transition: width 0.4s ease;
 }
 
-.ledge {
-  position: absolute;
-  top: 0;
-  left: -2%;
-  right: -2%;
+.cornice {
+  position: relative;
+  z-index: 2;
   height: 2px;
   background: linear-gradient(
     90deg,
-    transparent,
-    var(--tower-ledge),
-    transparent
+    var(--steel-hi) 0%,
+    var(--steel) 36%,
+    var(--steel-dim) 74%,
+    #1a2834 100%
   );
-  opacity: 0.7;
-}
-
-.windows {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  height: 100%;
-  padding: 0.35rem 8%;
-  gap: 0.25rem;
-}
-
-.window {
-  flex: 1;
-  max-width: 0.7rem;
-  height: 55%;
-  min-height: 0.55rem;
-  border-radius: 1px;
-  transition: background 0.4s ease, box-shadow 0.4s ease;
-}
-
-.dim {
-  background: var(--window-dim);
-  box-shadow: none;
-}
-
-.lit {
-  background: var(--window-lit);
   box-shadow:
-    0 0 6px var(--window-glow),
-    0 0 14px rgba(255, 196, 90, 0.35);
-  animation: lightFade 0.5s ease-out both;
+    0 1px 0 rgba(0, 0, 0, 0.55),
+    0 3px 4px rgba(0, 0, 0, 0.28);
 }
 
-.done {
+.body {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: stretch;
+  min-height: clamp(1.7rem, calc(48vh / var(--stories, 4)), 5.6rem);
+}
+
+.front {
+  position: relative;
+  display: flex;
+  flex: 1;
+  min-width: 0;
+}
+
+.mullions {
+  display: grid;
+  flex: 1;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  grid-template-rows: repeat(var(--rows), minmax(0, 1fr));
+  gap: 3px 2px;
+  min-height: 100%;
+  padding: 0.28rem 0.32rem 0.32rem;
+}
+
+.open .mullions {
+  background:
+    linear-gradient(90deg, rgba(232, 242, 250, 0.22), transparent 13%),
+    linear-gradient(180deg, #3a5164 0%, #243848 26%, #162430 100%);
+}
+
+.done .mullions {
+  background:
+    linear-gradient(90deg, rgba(255, 224, 176, 0.2), transparent 16%),
+    linear-gradient(180deg, #4e493e 0%, #313c48 32%, #1a2832 100%);
+}
+
+.sheen {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    112deg,
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(255, 255, 255, 0.05) 12%,
+    transparent 28%
+  );
+}
+
+.pane {
+  min-width: 0;
+  min-height: 0;
+  border-radius: 0.5px;
+}
+
+.paneDark {
+  background:
+    linear-gradient(
+      118deg,
+      rgba(198, 224, 238, 0.62) 0%,
+      rgba(150, 186, 208, 0.08) 24%,
+      transparent 25%
+    ),
+    linear-gradient(180deg, #163044, #081018 58%);
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.paneEmber {
+  background:
+    linear-gradient(180deg, rgba(255, 206, 140, 0.45), transparent 42%),
+    #3a2c1c;
+  box-shadow:
+    0 0 3px rgba(255, 170, 70, 0.35),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.35);
+}
+
+.paneCurtained {
+  background:
+    linear-gradient(180deg, rgba(255, 214, 150, 0.28), transparent 34%),
+    repeating-linear-gradient(
+      180deg,
+      #6e5230 0 1px,
+      #4a3822 1px 3px
+    );
+  box-shadow: inset 0 0 0 1px rgba(40, 24, 8, 0.45);
+}
+
+.paneWarm {
+  background:
+    linear-gradient(180deg, rgba(255, 228, 180, 0.45), transparent 36%),
+    linear-gradient(180deg, #e8a45a, #c47c30);
+  box-shadow:
+    0 0 4px rgba(224, 150, 60, 0.55),
+    inset 0 0 0 1px rgba(90, 48, 8, 0.25);
+}
+
+.paneLit {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.55), transparent 32%),
+    linear-gradient(180deg, #ffe3a8, #f0b04a 70%, #d4923c);
+  box-shadow:
+    inset 0 0 0 1px rgba(80, 44, 8, 0.28),
+    0 0 4px rgba(255, 196, 90, 0.8),
+    0 0 10px rgba(255, 170, 60, 0.28);
+}
+
+.paneBright {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.85), transparent 38%),
+    linear-gradient(180deg, #fff6d4, #ffd56e 72%);
+  box-shadow:
+    inset 0 0 0 1px rgba(90, 60, 10, 0.2),
+    0 0 4px rgba(255, 220, 140, 0.95),
+    0 0 12px rgba(255, 190, 80, 0.4);
+}
+
+.paneBright,
+.paneLit,
+.paneWarm,
+.paneCurtained,
+.paneEmber {
+  animation: lightFade 0.55s ease-out both;
+}
+
+.corner {
+  flex: none;
+  width: 2px;
   background: linear-gradient(
     180deg,
-    var(--tower-lit-mid) 0%,
-    var(--tower-dark) 100%
+    var(--steel-hi),
+    var(--steel) 28%,
+    #2c4050 100%
   );
 }
 
-.open {
-  /* default mass */
+.side {
+  flex: none;
+  width: calc(0.4rem + var(--depth) * 0.55rem);
+  box-shadow: inset -6px 0 7px rgba(0, 0, 0, 0.32);
+}
+
+.open .side {
+  background: repeating-linear-gradient(
+    180deg,
+    #b7c8d4 0 1px,
+    #1a2c3a 1px 12px
+  );
+}
+
+.done .side {
+  background: repeating-linear-gradient(
+    180deg,
+    #e4d0b0 0 1px,
+    #243038 1px 7px,
+    rgba(255, 186, 80, 0.72) 7px 9px,
+    #141e28 9px 13px
+  );
+}
+
+.done .cornice {
+  background: linear-gradient(
+    90deg,
+    #fff4de 0%,
+    #e8c48a 38%,
+    #8d7048 76%,
+    #2e281e 100%
+  );
+}
+
+.done .corner {
+  background: linear-gradient(180deg, #fff1d4, #d7b27a 40%, #3a3428);
 }
 
 @keyframes floorGrow {
   from {
     opacity: 0;
-    transform: scaleY(0.4) translateY(8px);
+    transform: scaleY(0.55) translateY(8px);
   }
   to {
     opacity: 1;
@@ -85,8 +213,8 @@
 
 @keyframes lightFade {
   from {
-    opacity: 0.3;
-    filter: brightness(0.6);
+    opacity: 0.25;
+    filter: brightness(0.55);
   }
   to {
     opacity: 1;
@@ -94,9 +222,24 @@
   }
 }
 
+@media (max-width: 899px) {
+  .body {
+    min-height: clamp(1.2rem, calc(22vh / var(--stories, 4)), 2.35rem);
+  }
+
+  .mullions {
+    gap: 2px 1px;
+    padding: 0.16rem 0.22rem 0.18rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .floor,
-  .lit {
+  .paneBright,
+  .paneLit,
+  .paneWarm,
+  .paneCurtained,
+  .paneEmber {
     animation: none;
   }
 }
