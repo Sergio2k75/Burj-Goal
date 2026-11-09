@@ -4,7 +4,7 @@ import { TaskForm } from "@/components/TaskForm";
 import { TaskList } from "@/components/TaskList";
 import { Tower } from "@/components/Tower";
 import { useTasks } from "@/lib/useTasks";
-import { INTERNAL_VERSION } from "@/lib/version";
+import packageJson from "@/package.json";
 import styles from "./GoalApp.module.css";
 
 /**
@@ -45,8 +45,8 @@ export function GoalApp() {
         </section>
       </main>
 
-      <p className={styles.version} aria-label={`Internal version ${INTERNAL_VERSION}`}>
-        v{INTERNAL_VERSION}
+      <p className={styles.version} aria-label={`Version ${packageJson.version}`}>
+        v{packageJson.version}
       </p>
     </div>
   );
