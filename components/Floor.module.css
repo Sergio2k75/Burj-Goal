@@ -162,30 +162,6 @@
   );
 }
 
-.side {
-  flex: none;
-  width: calc(0.4rem + var(--depth) * 0.55rem);
-  box-shadow: inset -6px 0 7px rgba(0, 0, 0, 0.32);
-}
-
-.open .side {
-  background: repeating-linear-gradient(
-    180deg,
-    #b7c8d4 0 1px,
-    #1a2c3a 1px 12px
-  );
-}
-
-.done .side {
-  background: repeating-linear-gradient(
-    180deg,
-    #e4d0b0 0 1px,
-    #243038 1px 7px,
-    rgba(255, 186, 80, 0.72) 7px 9px,
-    #141e28 9px 13px
-  );
-}
-
 .done .cornice {
   background: linear-gradient(
     90deg,

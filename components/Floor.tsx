@@ -60,7 +60,6 @@ export function Floor({ task, index, total }: FloorProps) {
     animationDelay: `${index * 45}ms`,
     "--cols": String(cols),
     "--rows": String(rows),
-    "--depth": (width / 100).toFixed(3),
   } as CSSProperties;
 
   return (
@@ -88,7 +87,6 @@ export function Floor({ task, index, total }: FloorProps) {
           <div className={styles.sheen} aria-hidden />
         </div>
         <div className={styles.corner} aria-hidden />
-        <div className={styles.side} aria-hidden />
       </div>
     </div>
   );

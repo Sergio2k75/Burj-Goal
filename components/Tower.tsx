@@ -82,7 +82,6 @@ export function Tower({ tasks }: TowerProps) {
                   >
                     <div className={styles.stubFront} />
                     <div className={styles.stubCorner} />
-                    <div className={styles.stubSide} />
                   </div>
                 ))}
               </div>

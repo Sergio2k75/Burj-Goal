@@ -224,16 +224,6 @@
   background: #c5d6e2;
 }
 
-.stubSide {
-  flex: none;
-  width: 0.72rem;
-  background: repeating-linear-gradient(
-    180deg,
-    #b7c9d4 0 1px,
-    #1c2c3a 1px 8px
-  );
-}
-
 .podium {
   display: flex;
   flex-direction: column;
