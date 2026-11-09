@@ -20,11 +20,20 @@
 
 .item {
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
   gap: 0.65rem;
   padding: 0.55rem 0;
   border-bottom: 1px solid rgba(140, 180, 210, 0.12);
+}
+
+.long {
+  align-items: start;
+}
+
+.long .floorNum,
+.long .delete {
+  margin-top: 0.35rem;
 }
 
 .floorNum {
@@ -35,10 +44,15 @@
   min-width: 1.75rem;
 }
 
+.goalDetails {
+  min-width: 0;
+}
+
 .toggle {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  width: 100%;
   padding: 0.25rem 0;
   border: none;
   background: transparent;
@@ -47,6 +61,10 @@
   text-align: left;
   cursor: pointer;
   min-width: 0;
+}
+
+.toggleExpanded {
+  align-items: flex-start;
 }
 
 .toggle:focus-visible {
@@ -69,15 +87,45 @@
 }
 
 .title {
+  flex: 1;
+  min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.expandedTitle {
+  overflow: visible;
+  text-overflow: clip;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 .done .title {
   color: var(--text-muted);
   text-decoration: line-through;
   text-decoration-color: rgba(255, 196, 90, 0.35);
+}
+
+.expand {
+  display: block;
+  margin: 0.1rem 0 0 1.4rem;
+  padding: 0.15rem 0;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font: inherit;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.expand:hover {
+  color: var(--text);
+}
+
+.expand:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 .delete {

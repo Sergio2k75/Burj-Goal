@@ -26,6 +26,41 @@ test.describe("Burj-Goal", () => {
     await expect(app.emptyCopy).toHaveCount(0);
   });
 
+  test("expands and collapses clipped goal titles", async ({ openApp }) => {
+    const app = await openApp();
+    const longTitle =
+      "Complete a detailed multi-step plan to improve my health, skills, relationships, and daily routines throughout the year";
+    await app.addGoal("Short goal");
+    await app.addGoal(longTitle);
+
+    const title = app.goalTitle(longTitle);
+    const expandButton = app.expandGoalButton(longTitle);
+    await expect(expandButton).toBeVisible();
+    await expect(app.expandGoalButton("Short goal")).toHaveCount(0);
+    await expect
+      .poll(() => title.evaluate((element) => element.scrollWidth > element.clientWidth))
+      .toBe(true);
+
+    await expandButton.click();
+
+    const collapseButton = app.collapseGoalButton(longTitle);
+    await expect(collapseButton).toBeVisible();
+    await expect(collapseButton).toHaveAttribute("aria-expanded", "true");
+    await expect
+      .poll(() => title.evaluate((element) => element.scrollWidth <= element.clientWidth))
+      .toBe(true);
+    await expect(app.completeButton(longTitle)).toHaveAttribute(
+      "aria-pressed",
+      "false",
+    );
+
+    await collapseButton.click();
+    await expect(app.expandGoalButton(longTitle)).toBeVisible();
+    await expect
+      .poll(() => title.evaluate((element) => element.scrollWidth > element.clientWidth))
+      .toBe(true);
+  });
+
   test("completes and reopens a goal", async ({ openApp }) => {
     const app = await openApp();
     await app.addGoal("Light the windows");

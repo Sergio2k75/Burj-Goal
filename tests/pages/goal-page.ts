@@ -76,6 +76,22 @@ export class GoalPage {
     });
   }
 
+  expandGoalButton(title: string) {
+    return this.page.getByRole("button", {
+      name: `Show full goal "${title}"`,
+    });
+  }
+
+  collapseGoalButton(title: string) {
+    return this.page.getByRole("button", {
+      name: `Show less of "${title}"`,
+    });
+  }
+
+  goalTitle(title: string) {
+    return this.page.getByText(title, { exact: true });
+  }
+
   floor(floorNumber: number) {
     return this.page.locator(`[data-floor="${floorNumber}"]`);
   }

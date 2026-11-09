@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import type { Task } from "@/lib/types";
 import styles from "./TaskList.module.css";
 
@@ -28,34 +29,98 @@ export function TaskList({ tasks, onToggle, onDelete }: TaskListProps) {
     <ul className={styles.list} aria-label="Goals">
       {ascending.map((task, index) => {
         const floorNumber = tasks.length - index;
-        const done = task.status === "done";
-
         return (
-          <li key={task.id} className={`${styles.item} ${done ? styles.done : ""}`}>
-            <span className={styles.floorNum} aria-hidden>
-              F{floorNumber}
-            </span>
-            <button
-              type="button"
-              className={styles.toggle}
-              onClick={() => onToggle(task.id)}
-              aria-pressed={done}
-              aria-label={done ? `Mark "${task.title}" open` : `Complete "${task.title}"`}
-            >
-              <span className={styles.lamp} />
-              <span className={styles.title}>{task.title}</span>
-            </button>
-            <button
-              type="button"
-              className={styles.delete}
-              onClick={() => onDelete(task.id)}
-              aria-label={`Delete "${task.title}"`}
-            >
-              Remove
-            </button>
-          </li>
+          <GoalItem
+            key={task.id}
+            task={task}
+            floorNumber={floorNumber}
+            onToggle={onToggle}
+            onDelete={onDelete}
+          />
         );
       })}
     </ul>
+  );
+}
+
+type GoalItemProps = {
+  task: Task;
+  floorNumber: number;
+  onToggle: (id: string) => void;
+  onDelete: (id: string) => void;
+};
+
+function GoalItem({ task, floorNumber, onToggle, onDelete }: GoalItemProps) {
+  const [expanded, setExpanded] = useState(false);
+  const [isClipped, setIsClipped] = useState(false);
+  const titleRef = useRef<HTMLSpanElement>(null);
+  const done = task.status === "done";
+  const titleId = `goal-title-${task.id}`;
+
+  useEffect(() => {
+    const title = titleRef.current;
+    if (!title || expanded) return;
+
+    const updateClipping = () => {
+      setIsClipped(title.scrollWidth > title.clientWidth);
+    };
+
+    updateClipping();
+    const observer = new ResizeObserver(updateClipping);
+    observer.observe(title);
+
+    return () => observer.disconnect();
+  }, [expanded, task.title]);
+
+  return (
+    <li
+      className={`${styles.item} ${done ? styles.done : ""} ${isClipped ? styles.long : ""}`}
+    >
+      <span className={styles.floorNum} aria-hidden>
+        F{floorNumber}
+      </span>
+      <div className={styles.goalDetails}>
+        <button
+          type="button"
+          className={`${styles.toggle} ${expanded ? styles.toggleExpanded : ""}`}
+          onClick={() => onToggle(task.id)}
+          aria-pressed={done}
+          aria-label={done ? `Mark "${task.title}" open` : `Complete "${task.title}"`}
+        >
+          <span className={styles.lamp} />
+          <span
+            id={titleId}
+            ref={titleRef}
+            className={`${styles.title} ${expanded ? styles.expandedTitle : ""}`}
+          >
+            {task.title}
+          </span>
+        </button>
+        {isClipped && (
+          <button
+            type="button"
+            className={styles.expand}
+            onClick={() => setExpanded(!expanded)}
+            aria-controls={titleId}
+            aria-expanded={expanded}
+            aria-label={
+              expanded
+                ? `Show less of "${task.title}"`
+                : `Show full goal "${task.title}"`
+            }
+          >
+            {expanded ? "Show less" : "Show more"}
+          </button>
+        )}
+      </div>
+      <button
+        type="button"
+        className={styles.delete}
+        onClick={() => onDelete(task.id)}
+        aria-label={`Delete "${task.title}"`}
+      >
+        Remove
+      </button>
+    </li>
   );
 }
