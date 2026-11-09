@@ -45,6 +45,16 @@ npm run build
 npm start
 ```
 
+## Updating the app version
+
+From the repository root, run:
+
+```bash
+npm version patch
+```
+
+This increments the patch version and updates `package.json` and `package-lock.json`. By default, npm also creates a Git commit and tag for the new version.
+
 ## Testing
 
 Playwright end-to-end tests live under [tests](tests). The suite covers empty state, adding goals, toggling completion, deletion, persistence, and cross-tab synchronization.
